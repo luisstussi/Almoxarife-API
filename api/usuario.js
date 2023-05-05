@@ -34,5 +34,24 @@ const getAll = async (req, res) => {
         }
 } 
 
-    return {save, getAll} // exportando
+const delet = async (req,res) => { 
+    const admins = await app.db('admins').where('usuario_id', req.user.id).first()
+        if (req.user.id == req.params.id) {
+            return res.status(406).send('Nao e possivel excluir a si mesmo')
+        }
+        app.db('usuario') 
+            .where({ id: req.params.id})
+            .del()
+            .then(rowsDeleted => {
+                if (rowsDeleted > 0){ 
+                    return res.status(204).send() 
+                } else { 
+                    const msg = `Usuario nao encontrado ${req.params.id}.` 
+                    return res.status(400).send(msg)
+                }
+            })
+            .catch(err => res.status(400).send(msg))
+    }
+
+    return {save, getAll, delet} 
 }
