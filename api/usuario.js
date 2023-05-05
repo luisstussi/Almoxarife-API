@@ -25,5 +25,14 @@ const save = async (req, res) => { // funcao de cricao de criptografia
     })
 }
 
-    return {save} // exportando
+const getAll = async (req, res) => {
+    const admins = await app.db('admins').where('usuario_id', req.user.id).first()
+        if(!admins) { 
+            res.status(403).send('Acesso nao autorizado')
+        } else {
+            app.db('usuario').then(usuarios => res.status(200).json(usuarios))
+        }
+} 
+
+    return {save, getAll} // exportando
 }

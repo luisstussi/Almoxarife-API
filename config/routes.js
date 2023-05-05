@@ -33,4 +33,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(app.api.ordens.validacao)
         
+    app.route('/usuario')
+        .all(app.config.passport.authenticate())
+        .get(app.api.usuario.getAll)
 }
