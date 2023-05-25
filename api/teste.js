@@ -6,5 +6,16 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
          console.log(pesq)
         return res.status(200).json(pesq)
     }
-    return {server}
+    const logado = async (req, res) => {
+        const usuario = req.user;
+        const admins = await app.db('admins').where('usuario_id', req.user.id).first()
+        if (!usuario){
+            return res.status(404)
+        } else if(!admins) {
+            return res.status(200).json({user: "admin"})
+        } else {
+            return res.status(200).json({user: "normal"})
+        } 
+    }
+    return {server, logado}
 }
