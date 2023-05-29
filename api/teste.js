@@ -12,9 +12,9 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         if (!usuario){
             return res.status(404)
         } else if(!admins) {
-            return res.status(200).json({user: "admin"})
-        } else {
             return res.status(200).json({user: "normal"})
+        } else {
+            return res.status(200).json({user: "admin"})
         } 
     }
     return {server, logado}
