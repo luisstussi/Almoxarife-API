@@ -10,6 +10,17 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         }
     }
 
+    const get = async (req,res) => { // funcao para listar todas as ordes
+        //pesquisando se o usuario é admin
+        const admins = await app.db('admins').where('usuario_id', req.user.id).first()
+        if(!admins) { //se nao for
+            //mostrar apenas ordens criadas pelo mesmo usuario
+            app.db('ordens').where('usuario_id', req.user.id).then(ordens => res.status(200).json(ordens))
+        } else { //caso seja admin
+            app.db('ordens').then(ordens => res.status(200).json(ordens)) // mostrar todas as ordens
+        }
+    }
+
     // o async serve para conseguirmos utilizar mais de uma funcao no banco de dados
     const save = async (req,res) => { // funcao para criar
         if(req.body.justificativa === null) { //caso o campo justificativa esteja vazio
@@ -105,5 +116,5 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         res.status(200).send()
     }
 
-        return { getAll,save,update,delet,validacao} //exportando funcoes para: listar, criar, editar, deletar e validar
+        return { getAll,save,update,delet,validacao,get} //exportando funcoes para: listar, criar, editar, deletar e validar
 }
