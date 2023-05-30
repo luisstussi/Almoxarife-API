@@ -22,14 +22,14 @@ module.exports = app => {
     app.route('/ordens')
         .all(app.config.passport.authenticate())
         .get(app.api.ordens.getAll)
-        .get(app.api.ordens.get)  
         .post(app.api.ordens.save) 
-    
+
     app.route('/ordens/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
         .put(app.api.ordens.update)
-    
+        .get(app.api.ordens.get) 
+
     app.route('/validar/:id')
         .all(app.config.passport.authenticate())
         .put(app.api.ordens.validacao)

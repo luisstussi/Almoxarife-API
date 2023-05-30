@@ -15,9 +15,9 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         const admins = await app.db('admins').where('usuario_id', req.user.id).first()
         if(!admins) { //se nao for
             //mostrar apenas ordens criadas pelo mesmo usuario
-            app.db('ordens').where('usuario_id', req.user.id).then(ordens => res.status(200).json(ordens))
+            app.db('ordens').where('usuario_id', req.user.id).where('id',req.params.id).then(ordens => res.status(200).json(ordens))
         } else { //caso seja admin
-            app.db('ordens').then(ordens => res.status(200).json(ordens)) // mostrar todas as ordens
+            app.db('ordens').where('id',req.params.id).then(ordens => res.status(200).json(ordens)) // mostrar todas as ordens
         }
     }
 
