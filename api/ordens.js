@@ -10,16 +10,31 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         }
     }
 
-    const get = async (req,res) => { // funcao para listar todas as ordes
-        //pesquisando se o usuario é admin
-        const admins = await app.db('admins').where('usuario_id', req.user.id).first()
-        if(!admins) { //se nao for
-            //mostrar apenas ordens criadas pelo mesmo usuario
-            app.db('ordens').where('usuario_id', req.user.id).where('id',req.params.id).then(ordens => res.status(200).json(ordens))
-        } else { //caso seja admin
-            app.db('ordens').where('id',req.params.id).then(ordens => res.status(200).json(ordens)) // mostrar todas as ordens
-        }
-    }
+    const pesquisaord = async (req, res) => {
+        console.log("estou aqui")
+        const pesqjust = req.query.just
+        const pesqex = req.query.ex
+        const pesquser = req.query.usuario_id
+        const pesqadm = req.query.adm
+        const pesqid = req.query.id
+   
+       var querybuilder = {}
+       console.log(req.query.id)
+       console.log(pesqid)
+
+        if (req.query.just) {querybuilder.justificativa = pesqjust}
+        if (req.query.ex) {querybuilder.executada = pesqex}
+        if (req.query.user) {querybuilder.usuario_id = pesquser}
+        if (req.query.adm) {querybuilder.admins_id = pesqadm}
+        if (req.query.id) {querybuilder.id = pesqid}
+
+        console.log(querybuilder)
+        console.log(querybuilder)
+        const pesq = await app.db('ordens').where(querybuilder)
+                                       
+       return res.status(200).json(pesq) 
+       return res.status(200)
+}
 
     // o async serve para conseguirmos utilizar mais de uma funcao no banco de dados
     const save = async (req,res) => { // funcao para criar
@@ -116,5 +131,5 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         res.status(200).send()
     }
 
-        return { getAll,save,update,delet,validacao,get} //exportando funcoes para: listar, criar, editar, deletar e validar
+        return { getAll,save,update,delet,validacao,pesquisaord} //exportando funcoes para: listar, criar, editar, deletar e validar
 }

@@ -28,7 +28,10 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
         .put(app.api.ordens.update)
-        .get(app.api.ordens.get) 
+
+    app.route('/ordem/search')
+        .all(app.config.passport.authenticate())
+        .get(app.api.ordens.pesquisaord)
 
     app.route('/validar/:id')
         .all(app.config.passport.authenticate())
