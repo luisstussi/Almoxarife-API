@@ -53,5 +53,26 @@ const delet = async (req,res) => {
             .catch(err => res.status(400).send(msg))
     }
 
-    return {save, getAll, delet} 
+    const pesquisauser = async (req, res) => {
+        const pesqnome= req.query.nome
+        const pesqemail = req.query.email
+        const pesqsenha = req.query.senha
+        const pesqtelefone = req.query.telefone
+        const pesqcpf = req.query.cpf
+
+        var querybuilder = {}
+
+        if (req.query.nome) {querybuilder.nome = pesqnome}
+        if (req.query.email) {querybuilder.email = pesqemail}
+        if (req.query.senha) {querybuilder.senha = pesqsenha}
+        if (req.query.telefone) {querybuilder.telefone = pesqtelefone}
+        if (req.query.cpf) {querybuilder.cpf = pesqcpf}
+        
+        const pesq = await app.db('usuario').where(querybuilder)
+        
+        return res.status(200).json(pesq) 
+        
+}
+
+    return {save, getAll, delet, pesquisauser} 
 }
