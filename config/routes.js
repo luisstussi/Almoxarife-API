@@ -18,7 +18,7 @@ module.exports = app => {
     app.route('/itens/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.itens.delet)
-        
+       
     
     app.route('/ordens')
         .all(app.config.passport.authenticate())
@@ -28,11 +28,12 @@ module.exports = app => {
     app.route('/ordens/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
-        .put(app.api.ordens.update)
+        
 
     app.route('/ordem/search')
         .all(app.config.passport.authenticate())
         .get(app.api.ordens.pesquisaord)
+        .put(app.api.ordens.update)
 
     app.route('/validar/:id')
         .all(app.config.passport.authenticate())
@@ -49,9 +50,4 @@ module.exports = app => {
     app.route('/logtest')
         .all(app.config.passport.authenticate())
         .get(app.api.teste.logado)
-    
-    app.route('/user/search')
-        .all(app.config.passport.authenticate())
-        .get(app.api.usuario.pesquisauser)
-
 }
