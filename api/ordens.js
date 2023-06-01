@@ -85,7 +85,6 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         res.status(200).send(`Foram alocados os itens ${vetItens} mas nao foi possivel alocar os itens ${vetErrados}`)
     }
 
-
     const update = async (req,res) => { //funcao para editar as ordens
         let querybuilder = {}; //o querybuilder serve para adicionar as variaveis que serao modificadas no banco de dados
         // caso o usuario informe a justificativa, acrescentar a justificativa no querybuilder

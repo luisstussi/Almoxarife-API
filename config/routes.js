@@ -13,11 +13,12 @@ module.exports = app => {
     app.route('/itens/search')
         .all(app.config.passport.authenticate())
         .get(app.api.itens.pesquisa)
+        .put(app.api.itens.update)
 
     app.route('/itens/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.itens.delet)
-        .put(app.api.itens.update)
+        
     
     app.route('/ordens')
         .all(app.config.passport.authenticate())
