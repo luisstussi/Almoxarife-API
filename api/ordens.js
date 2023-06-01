@@ -30,10 +30,16 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
 
         console.log(querybuilder)
         console.log(querybuilder)
-        const pesq = await app.db('ordens').where(querybuilder)
-                                       
-       return res.status(200).json(pesq) 
-       return res.status(200)
+        const admin = await  app.db('admins').where({ usuario_id:req.user.id}).first();
+        let pesq = {};
+        if(admin) {
+             pesq = await app.db('ordens').where(querybuilder)
+        } else {
+             pesq = await app.db('ordens').where({usuario_id:req.user.id}).where(querybuilder)
+        }
+                                    
+        return res.status(200).json(pesq) 
+    
 }
 
     // o async serve para conseguirmos utilizar mais de uma funcao no banco de dados
@@ -129,7 +135,10 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         await app.db('ordens').where({ id:req.params.id}).update({ admins_id:admins.id}) //atualizando o admin na ordens
 
         res.status(200).send()
+        
     }
+
+
 
         return { getAll,save,update,delet,validacao,pesquisaord} //exportando funcoes para: listar, criar, editar, deletar e validar
 }
