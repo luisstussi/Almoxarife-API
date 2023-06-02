@@ -50,4 +50,9 @@ module.exports = app => {
     app.route('/logtest')
         .all(app.config.passport.authenticate())
         .get(app.api.teste.logado)
+        
+    app.route('/user/search')
+        .all(app.config.passport.authenticate())
+        .get(app.api.usuario.pesquisauser)
+
 }
