@@ -11,7 +11,6 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
     }
 
     const pesquisaord = async (req, res) => {
-        console.log("estou aqui")
         const pesqjust = req.query.just
         const pesqex = req.query.ex
         const pesquser = req.query.usuario_id
@@ -105,18 +104,22 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         
     }
     const delet = (req,res) => { // funcao para deletar ordens
+        console.log("estou aqui")
+        var msg;
         app.db('ordens') //pesquisando
             .where({ id: req.params.id})
             .del()
             .then(rowsDeleted => {
+                console.log("deletou")
+                console.log(rowsDeleted)
                 if (rowsDeleted > 0){ //se o numero de linhas for maior que 0
                     return res.status(204).send() //sucesso
                 } else { //senao
-                    const msg = `Ordem nao encontrado ${req.params.id}.` // retorna erro:ordem nao encontrada
+                    msg = `Ordem nao encontrado ${req.params.id}.` // retorna erro:ordem nao encontrada
                     return res.status(400).send(msg)
                 }
             })
-            .catch(err => res.status(400).send(msg))
+            .catch(err => res.status(400).send(err))
     }
 
     const validacao = async (req,res) => { //funcao de validacao
@@ -133,10 +136,8 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         }
         await app.db('ordens').where({ id:req.params.id}).update({ admins_id:admins.id}) //atualizando o admin na ordens
 
-        res.status(200).send()
-        
+        res.status(200).send()      
     }
-
 
 
         return { getAll,save,update,delet,validacao,pesquisaord} //exportando funcoes para: listar, criar, editar, deletar e validar

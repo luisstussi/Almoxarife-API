@@ -18,8 +18,7 @@ module.exports = app => {
     app.route('/itens/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.itens.delet)
-       
-    
+        
     app.route('/ordens')
         .all(app.config.passport.authenticate())
         .get(app.api.ordens.getAll)
@@ -29,7 +28,6 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
         
-
     app.route('/ordem/search')
         .all(app.config.passport.authenticate())
         .get(app.api.ordens.pesquisaord)
