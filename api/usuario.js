@@ -73,6 +73,23 @@ const delet = async (req,res) => {
         return res.status(200).json(pesq) 
         
 }
+const update = (req,res) => {//funcao para editar usuario
+    let querybuilder = {}; //o querybuilder serve para adicionar as variaveis que serao modificadas no banco de dados
+    if(req.body.nome) querybuilder.nome = req.body.nome; //caso o usuario informe o nome, acrescentar no querybuilder
+    if(req.body.email) querybuilder.email = req.body.email;//caso o usuario informe a descricao, acrescentar no querybuilder
+    if(req.body.senha) querybuilder.senha = req.body.senha;//caso o usuario informe a categoria, acrescentar no querybuilder
+    if(req.body.cpf) querybuilder.cpf = req.body.cpf
+    if(req.body.telefone) querybuilder.telefone = req.body.telefone
 
-    return {save, getAll, delet, pesquisauser} 
+    app.db('usuario')// pesquisando no banco de dados na tabela usuario
+        .where({ id: req.params.id})
+        .update({
+            // os tres pontos servem para adicionar um json  dentro de outro json
+            ...querybuilder
+        })
+        .then(_ => res.status(204).send())
+        .catch(err => res.status(400).json(err))
+}
+
+    return {save, getAll, delet, pesquisauser, update} 
 }
