@@ -74,6 +74,7 @@ const delet = async (req,res) => {
         
 }
 const update = (req,res) => {//funcao para editar usuario
+    console.log("AQUI ESTÁ!")
     let querybuilder = {}; //o querybuilder serve para adicionar as variaveis que serao modificadas no banco de dados
     if(req.body.nome) querybuilder.nome = req.body.nome; //caso o usuario informe o nome, acrescentar no querybuilder
     if(req.body.email) querybuilder.email = req.body.email;//caso o usuario informe a descricao, acrescentar no querybuilder
