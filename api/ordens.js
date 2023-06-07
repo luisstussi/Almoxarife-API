@@ -104,18 +104,14 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         
     }
     const delet = (req,res) => { // funcao para deletar ordens
-        console.log("estou aqui")
-        var msg;
-        app.db('ordens') //pesquisando
+        app.db('ordens') //pesquisando no banco de dados
             .where({ id: req.params.id})
             .del()
             .then(rowsDeleted => {
-                console.log("deletou")
-                console.log(rowsDeleted)
                 if (rowsDeleted > 0){ //se o numero de linhas for maior que 0
                     return res.status(204).send() //sucesso
                 } else { //senao
-                    msg = `Ordem nao encontrado ${req.params.id}.` // retorna erro:ordem nao encontrada
+                    const msg = `Ordem nao encontrado ${req.params.id}` // retorna erro:ordem nao encontrada
                     return res.status(400).send(msg)
                 }
             })

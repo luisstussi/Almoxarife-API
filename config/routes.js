@@ -24,7 +24,8 @@ module.exports = app => {
         .get(app.api.ordens.getAll)
         .post(app.api.ordens.save) 
 
-    app.route('/ordens/:id')
+    app.route('/ordemz')
+    
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
         
