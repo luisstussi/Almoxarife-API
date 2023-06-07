@@ -119,18 +119,21 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
     }
 
     const validacao = async (req,res) => { //funcao de validacao
+        console.log("estou aqui!!")
         const admins = await app.db('admins').where('usuario_id',req.user.id).first() // verificando na tabela admin se o usuario logado é admin
+        console.log(admins)
         if(!admins) { // se nao for
             return res.status(401).send('Apenas admins podem validar') // retorna erro: apenas admins podem validar
         }
-        const ordem = await app.db('ordens').where('id',req.params.id) // pesquisando ordem pelo id
+        const ordem = await app.db('ordens').where('id',req.params.id).first() // pesquisando ordem pelo id
+        console.log(ordem)
         if(!ordem){ //se nao encontrar
             return res.status(404).send('Ordem nao encontrada') // retorna erro: ordem nao encontrada
         }
         if(ordem.admins_id !== null){ //se  o campo admin id do admin for diferente de nulo
             return res.status(406).send('Nao e permitido autorizar a mesma ordem') //retorna ordem: nao e permitido autorizar a mesma ordem
         }
-        await app.db('ordens').where({ id:req.params.id}).update({ admins_id:admins.id}) //atualizando o admin na ordens
+        await app.db('ordens').where({ id:req.params.id}).update({ admins_id:admins.id, executada:true}) //atualizando o admin na ordens
 
         res.status(200).send()      
     }

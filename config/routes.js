@@ -24,7 +24,7 @@ module.exports = app => {
         .get(app.api.ordens.getAll)
         .post(app.api.ordens.save) 
 
-    app.route('/ordemz')
+    app.route('/ordemz/:id')
     
         .all(app.config.passport.authenticate())
         .delete(app.api.ordens.delet)
@@ -34,9 +34,9 @@ module.exports = app => {
         .get(app.api.ordens.pesquisaord)
         .put(app.api.ordens.update)
 
-    app.route('/validar/:id')
+    app.route('/validaordem/:id')
         .all(app.config.passport.authenticate())
-        .put(app.api.ordens.validacao)
+        .post(app.api.ordens.validacao)
         
     app.route('/usuario')
         .all(app.config.passport.authenticate())
