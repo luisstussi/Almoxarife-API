@@ -4,7 +4,7 @@ exports.up = function(knex) {
         // tipo do campo, (nome, caso seja necessario informar tbm o numero de caracteres), propriedades
         table.increments('id').primary();
         table.text('justificativa');
-        table.text('itens')
+        table.text('itens');
         table.boolean('executada').notNullable().defaultTo(false);
         table.integer('usuario_id').notNullable();
         table.integer('admins_id')
