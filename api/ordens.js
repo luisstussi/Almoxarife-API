@@ -62,7 +62,7 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
             if(itens[i].ordem_id === null){ // se o id da ordem for nulo
                 vetItens.push(itens[i].id) // o item esta disponivel, e sera adicionado no vetor vetItens
             }else{ //senao
-                vetErrados.push(itens[i].id)// o item esta indisponive e sera adicionado no vetor vetErrados
+                vetErrados.push(itens[i].id)// o item esta indisponivel e sera adicionado no vetor vetErrados
 
             }
         }

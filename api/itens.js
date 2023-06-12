@@ -92,7 +92,7 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
              if (req.query.itid) {querybuilder.id = pesqitid}
              if (req.query.adid) {querybuilder.admin_id = pesqadid}
 
-             const pesq = await app.db('itens').where(querybuilder)
+             const pesq = await app.db('itens').where(querybuilder).where({disponivel:true})
                                             
             return res.status(200).json(pesq)
     }
