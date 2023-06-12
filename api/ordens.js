@@ -32,9 +32,16 @@ module.exports = app => { // sempre trabalharemos dentro de modulos
         const admin = await  app.db('admins').where({ usuario_id:req.user.id}).first();
         let pesq = {};
         if(admin) {
-             pesq = await app.db('ordens').where(querybuilder)
+            //.join('usuario', {'usuario.id':'ordens.usuario_id'})
+            //.join('itens', 'ordens.id', '=','itens.ordem_id')
+            //.innerJoin('itens', 'ordens.id', 'itens.ordem_id')
+             pesq = await app.db('ordens').where(querybuilder).join('itens', 'ordens.id', '=','itens.ordem_id')
+             
         } else {
-             pesq = await app.db('ordens').where({usuario_id:req.user.id}).where(querybuilder)
+            //.join('itens', 'ordens.id', '=','itens.ordem_id')
+            //.join('usuario', {'usuario.id':'ordens.usuario_id'})
+            //.innerJoin('itens', 'ordens.id', 'itens.ordem_id')
+             pesq = await app.db('ordens').where({usuario_id:req.user.id}).where(querybuilder).join('itens', 'ordens.id', '=','itens.ordem_id')
         }
                                     
         return res.status(200).json(pesq) 
